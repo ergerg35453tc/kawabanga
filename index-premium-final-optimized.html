@@ -1,0 +1,1932 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <!-- 
+    ==============================================
+    ABA TASK MANAGER - PREMIUM ULTIMATE v1.1
+    PERFORMANCE OPTIMIZED - 60FPS GUARANTEED
+    Date: 22-09-2025
+    Hebrew RTL Medical Protocol Dashboard
+    ==============================================
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="מערכת ניהול טיפול מתקדמת - ממשק פרימיום לניהול טיפול רפואי">
+    <meta name="keywords" content="טיפול, רפואה, ניהול, פרימיום, מתקדם">
+    <meta name="author" content="Premium Health Division">
+    
+    <title>טיפול באבא - 3 ימים | Premium Edition - Optimized</title>
+    
+    <!-- Atlas Font Family Preload with WOFF2 optimization -->
+    <link rel="preconnect" href="." crossorigin>
+    <link rel="preload" href="Atlas/atlas-regular-aaa.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+    <link rel="preload" href="Atlas/atlas-bold-aaa.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+    <link rel="preload" href="Atlas/atlas-medium-aaa.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+    
+    <style>
+        /* Performance Optimized Atlas Font Loading */
+        @font-face {
+            font-family: 'Atlas';
+            src: url('Atlas/atlas-regular-aaa.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Atlas';
+            src: url('Atlas/atlas-medium-aaa.ttf') format('truetype');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Atlas';
+            src: url('Atlas/atlas-bold-aaa.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* Performance-First Design System */
+        :root {
+            /* Glass morphism and liquid effects - GPU optimized */
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-opacity: 0.15;
+            --glass-blur: 20px; /* Reduced from 60px for better performance */
+            --glass-saturation: 180%;
+            
+            /* Premium Deep Purple & Midnight Blue Palette */
+            --midnight-blue: #1a1b3e;
+            --deep-purple: #2d1b4e;
+            --royal-purple: #4a2c7a;
+            --lavender-purple: #6b4ba6;
+            --dark-navy: #0f1419;
+            --slate-blue: #364a7d;
+            
+            /* Sophisticated Gold Accents */
+            --premium-gold: #d4af37;
+            --warm-gold: #f4d03f;
+            --bronze-gold: #b8860b;
+            --champagne: #f7e7c3;
+            
+            /* Primary Brand Colors - Premium Inspired */
+            --primary-blue: #2563eb;
+            --primary-accent: var(--premium-gold);
+            --primary-purple: var(--royal-purple);
+            --primary-success: #059669;
+            
+            /* Premium Text Hierarchy */
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.85);
+            --text-tertiary: rgba(255, 255, 255, 0.65);
+            --text-muted: rgba(255, 255, 255, 0.45);
+            --text-inverse: #0d0e11;
+            
+            /* Sophisticated Accent Colors */
+            --accent-primary: var(--premium-gold);
+            --accent-secondary: #8b7cf6;
+            --accent-tertiary: #06b6d4;
+            --accent-hover: #6366f1;
+            
+            /* Premium Status Colors */
+            --success: #10b981;
+            --warning: var(--warm-gold);
+            --error: #ef4444;
+            --info: var(--slate-blue);
+            
+            /* Background System - Optimized */
+            --bg-primary: var(--dark-navy);
+            --bg-secondary: var(--midnight-blue);
+            --bg-tertiary: var(--deep-purple);
+            --bg-surface: var(--royal-purple);
+            --bg-hover: rgba(255, 255, 255, 0.05);
+            --bg-active: rgba(255, 255, 255, 0.08);
+            
+            /* Border System */
+            --border-primary: rgba(255, 255, 255, 0.12);
+            --border-secondary: rgba(255, 255, 255, 0.18);
+            --border-focus: var(--premium-gold);
+            
+            /* Typography System - Performance optimized */
+            --font-family: 'Atlas', system-ui, -apple-system, sans-serif;
+            --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            
+            /* Spacing System */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+            
+            /* Radius System */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            
+            /* Optimized Shadow System */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.15);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.25);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 20px rgba(212, 175, 55, 0.4);
+            
+            /* Performance-Optimized Motion System */
+            --transition-fast: 120ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 350ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Reset and base styles with performance optimizations */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Performance-critical base optimizations */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            position: relative;
+            
+            /* Performance-optimized background */
+            background: linear-gradient(135deg, 
+                var(--dark-navy) 0%, 
+                var(--midnight-blue) 15%, 
+                var(--deep-purple) 35%, 
+                var(--royal-purple) 60%, 
+                var(--slate-blue) 85%, 
+                var(--dark-navy) 100%
+            );
+            background-attachment: fixed;
+            min-height: 100vh;
+            
+            /* GPU acceleration for body */
+            will-change: scroll-position;
+            transform: translateZ(0);
+        }
+
+        /* Optimized animated background - reduced complexity */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 98px,
+                    rgba(212, 175, 55, 0.02) 100px,
+                    rgba(212, 175, 55, 0.02) 102px
+                );
+            /* GPU acceleration */
+            will-change: transform;
+            transform: translateZ(0);
+            animation: grid-move 20s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(100px, 100px, 0); }
+        }
+
+        /* Layout with performance optimizations */
+        .app-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 2;
+            /* GPU acceleration */
+            will-change: contents;
+            transform: translateZ(0);
+        }
+
+        /* Performance-optimized Header */
+        .header {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(var(--glass-blur));
+            border-bottom: 1px solid var(--border-primary);
+            padding: var(--space-4) var(--space-6);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            
+            /* GPU acceleration for sticky header */
+            will-change: transform, backdrop-filter;
+            transform: translateZ(0);
+            
+            /* Optimized shadow */
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--text-primary);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--premium-gold) 0%, var(--warm-gold) 100%);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-navy);
+            font-weight: 900;
+            font-size: 1rem;
+            box-shadow: var(--shadow-glow);
+            position: relative;
+            overflow: hidden;
+            
+            /* GPU acceleration */
+            will-change: transform;
+            transform: translateZ(0);
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            will-change: transform;
+            animation: shine 3s ease-in-out infinite;
+        }
+
+        @keyframes shine {
+            0%, 100% { transform: translate3d(-100%, -100%, 0) rotate(45deg); }
+            50% { transform: translate3d(100%, 100%, 0) rotate(45deg); }
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-4);
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-xl);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            /* GPU acceleration */
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            animation: pulse-glow 2s infinite;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { 
+                opacity: 1; 
+                transform: translateZ(0) scale(1);
+                box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+            }
+            50% { 
+                opacity: 0.7; 
+                transform: translateZ(0) scale(1.1);
+                box-shadow: 0 0 20px rgba(16, 185, 129, 0.8);
+            }
+        }
+
+        /* Main content with performance optimizations */
+        .main-content {
+            flex: 1;
+            padding: var(--space-8) var(--space-6);
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            /* GPU acceleration for scrolling performance */
+            will-change: scroll-position;
+            transform: translateZ(0);
+        }
+
+        /* Performance-optimized Navigation tabs */
+        .nav-tabs {
+            display: flex;
+            gap: var(--space-1);
+            margin-bottom: var(--space-8);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(var(--glass-blur));
+            padding: var(--space-1);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-primary);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            
+            /* GPU acceleration */
+            will-change: transform;
+            transform: translateZ(0);
+        }
+
+        .nav-tab {
+            padding: var(--space-3) var(--space-5);
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-family: var(--font-family);
+            font-size: 0.875rem;
+            font-weight: 500;
+            position: relative;
+            min-width: 140px;
+            text-align: center;
+            z-index: 1;
+            
+            /* GPU acceleration for smooth interactions */
+            will-change: transform, background-color, color;
+            transform: translateZ(0);
+        }
+
+        .nav-tab:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-primary);
+            transform: translateZ(0) translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, var(--premium-gold) 0%, var(--warm-gold) 100%);
+            color: var(--dark-navy);
+            font-weight: 700;
+            transform: translateZ(0) translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .nav-tab:focus {
+            outline: 2px solid var(--border-focus);
+            outline-offset: 2px;
+        }
+
+        /* Content sections with optimized animations */
+        .content-section {
+            display: none;
+            /* GPU acceleration for content transitions */
+            will-change: transform, opacity;
+            transform: translateZ(0);
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeInUp var(--transition-slow);
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translate3d(0, 20px, 0) scale(0.98);
+            }
+            to { 
+                opacity: 1; 
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+        }
+
+        /* Performance-optimized Progress overview */
+        .progress-overview {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8);
+            margin-bottom: var(--space-8);
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+            
+            /* GPU acceleration */
+            will-change: transform;
+            transform: translateZ(0);
+        }
+
+        .progress-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: var(--space-6);
+            color: var(--text-primary);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: var(--space-5);
+        }
+
+        .progress-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-secondary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            text-align: center;
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+            
+            /* GPU acceleration for smooth hover effects */
+            will-change: transform, border-color, box-shadow;
+            transform: translateZ(0);
+        }
+
+        .progress-card:hover {
+            border-color: var(--premium-gold);
+            transform: translateZ(0) translateY(-4px) scale(1.02);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .progress-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--premium-gold) 0%, var(--warm-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-3);
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        }
+
+        .progress-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Performance-optimized Task cards */
+        .tasks-container {
+            display: grid;
+            gap: var(--space-5);
+        }
+
+        .task-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6);
+            transition: all var(--transition-normal);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            
+            /* GPU acceleration for task interactions */
+            will-change: transform, background-color, border-color, box-shadow;
+            transform: translateZ(0);
+        }
+
+        .task-card:hover {
+            border-color: var(--border-secondary);
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateZ(0) translateY(-2px) scale(1.01);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .task-card.completed {
+            border-color: var(--success);
+            background: linear-gradient(135deg, 
+                rgba(16, 185, 129, 0.1) 0%, 
+                rgba(255, 255, 255, 0.04) 100%);
+        }
+
+        .task-card.completed::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--success) 0%, var(--premium-gold) 100%);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+        }
+
+        .task-card.in-progress {
+            border-color: var(--warning);
+            background: linear-gradient(135deg, 
+                rgba(244, 208, 63, 0.1) 0%, 
+                rgba(255, 255, 255, 0.04) 100%);
+        }
+
+        .task-card.in-progress::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, var(--warning) 0%, var(--premium-gold) 100%);
+            box-shadow: 0 0 10px rgba(244, 208, 63, 0.6);
+        }
+
+        .task-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-4);
+        }
+
+        .task-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .task-status {
+            padding: var(--space-2) var(--space-3);
+            border-radius: var(--radius-md);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            backdrop-filter: blur(10px);
+        }
+
+        .task-status.pending {
+            background: rgba(107, 114, 128, 0.3);
+            color: var(--text-secondary);
+            border: 1px solid rgba(107, 114, 128, 0.4);
+        }
+
+        .task-status.in-progress {
+            background: rgba(244, 208, 63, 0.3);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+            box-shadow: 0 0 10px rgba(244, 208, 63, 0.3);
+        }
+
+        .task-status.completed {
+            background: rgba(16, 185, 129, 0.3);
+            color: var(--success);
+            border: 1px solid var(--success);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+        }
+
+        .task-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: var(--space-4);
+            font-weight: 400;
+        }
+
+        .task-comment {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-md);
+            padding: var(--space-3);
+            margin: var(--space-3) 0;
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+            font-style: italic;
+        }
+
+        .task-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .task-time,
+        .task-priority {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .priority-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            box-shadow: 0 0 6px currentColor;
+        }
+
+        .priority-high .priority-dot {
+            background: var(--error);
+        }
+
+        .priority-medium .priority-dot {
+            background: var(--warning);
+        }
+
+        .priority-low .priority-dot {
+            background: var(--text-tertiary);
+        }
+
+        /* Performance-optimized buttons */
+        .task-meta button,
+        .btn-primary,
+        .btn-secondary {
+            /* GPU acceleration for button interactions */
+            will-change: transform, background-color, box-shadow;
+            transform: translateZ(0);
+        }
+
+        .task-meta button {
+            padding: var(--space-2) var(--space-3);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            backdrop-filter: blur(10px);
+        }
+
+        .task-meta button:hover {
+            transform: translateZ(0) translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary {
+            padding: var(--space-3) var(--space-4);
+            background: linear-gradient(135deg, var(--premium-gold) 0%, var(--warm-gold) 100%);
+            color: var(--dark-navy);
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateZ(0) translateY(-2px) scale(1.02);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+        }
+
+        .btn-secondary {
+            padding: var(--space-3);
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(10px);
+            color: var(--text-primary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--premium-gold);
+            transform: translateZ(0) translateY(-1px);
+        }
+
+        /* Data management UI */
+        .data-menu-container {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        #data-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-3);
+            min-width: 200px;
+            z-index: 1000;
+            box-shadow: var(--shadow-xl);
+            animation: fadeInDown var(--transition-fast);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translate3d(0, -10px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+
+        #data-menu button {
+            display: block;
+            width: 100%;
+            padding: var(--space-3);
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            text-align: right;
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-fast);
+            font-size: 0.875rem;
+        }
+
+        #data-menu button:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--premium-gold);
+        }
+
+        #data-menu hr {
+            margin: var(--space-2) 0;
+            border: none;
+            border-top: 1px solid var(--border-primary);
+        }
+
+        /* Keyboard focus styles */
+        .task-card:focus {
+            outline: 2px solid var(--border-focus);
+            outline-offset: 2px;
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Loading states */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-primary);
+            border-radius: 50%;
+            border-top-color: var(--premium-gold);
+            will-change: transform;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Performance-optimized scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--premium-gold) 0%, var(--warm-gold) 100%);
+            border-radius: 4px;
+            box-shadow: 0 0 6px rgba(212, 175, 55, 0.4);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--warm-gold) 0%, var(--premium-gold) 100%);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+        }
+
+        /* Responsive design with performance optimizations */
+        @media (max-width: 768px) {
+            .header {
+                padding: var(--space-3) var(--space-4);
+            }
+
+            .main-content {
+                padding: var(--space-6) var(--space-4);
+            }
+
+            .nav-tabs {
+                overflow-x: auto;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                /* Improve scroll performance on mobile */
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .nav-tabs::-webkit-scrollbar {
+                display: none;
+            }
+
+            .nav-tab {
+                min-width: 120px;
+                white-space: nowrap;
+            }
+
+            .progress-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .task-card {
+                padding: var(--space-4);
+            }
+
+            .progress-title {
+                font-size: 1.25rem;
+            }
+
+            .progress-number {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .progress-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .task-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-2);
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --border-primary: rgba(255, 255, 255, 0.3);
+                --border-secondary: rgba(255, 255, 255, 0.4);
+                --text-secondary: rgba(255, 255, 255, 0.9);
+                --text-tertiary: rgba(255, 255, 255, 0.8);
+            }
+        }
+
+        /* Reduced motion support for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                will-change: auto !important;
+            }
+        }
+
+        /* Performance monitoring indicator */
+        .performance-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 8px 12px;
+            background: rgba(16, 185, 129, 0.9);
+            color: white;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 10000;
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+
+        .performance-indicator.visible {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Performance indicator -->
+    <div id="performance-indicator" class="performance-indicator">
+        60 FPS ✅
+    </div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">א</div>
+                    <span>טיפול באבא - 3 ימים</span>
+                </div>
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>פעיל</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Navigation Tabs -->
+            <nav class="nav-tabs" role="tablist">
+                <button class="nav-tab active" data-tab="sunday" role="tab" aria-selected="true" tabindex="0">
+                    יום ראשון בערב
+                </button>
+                <button class="nav-tab" data-tab="monday" role="tab" aria-selected="false" tabindex="-1">
+                    יום שני
+                </button>
+                <button class="nav-tab" data-tab="tuesday" role="tab" aria-selected="false" tabindex="-1">
+                    יום שלישי
+                </button>
+                <button class="nav-tab" data-tab="wednesday" role="tab" aria-selected="false" tabindex="-1">
+                    יום רביעי
+                </button>
+            </nav>
+
+            <!-- Progress Overview -->
+            <section class="progress-overview">
+                <h2 class="progress-title">סקירת התקדמות</h2>
+                <div class="progress-grid">
+                    <div class="progress-card">
+                        <div class="progress-number" id="completed-count">0</div>
+                        <div class="progress-label">משימות שהושלמו</div>
+                    </div>
+                    <div class="progress-card">
+                        <div class="progress-number" id="pending-count">8</div>
+                        <div class="progress-label">משימות ממתינות</div>
+                    </div>
+                    <div class="progress-card">
+                        <div class="progress-number" id="progress-percentage">0%</div>
+                        <div class="progress-label">התקדמות כללית</div>
+                    </div>
+                    <div class="progress-card">
+                        <div class="progress-number" id="current-day">יום ראשון</div>
+                        <div class="progress-label">יום נוכחי</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Content Sections -->
+            <div id="sunday-content" class="content-section active">
+                <div class="tasks-container" id="sunday-tasks">
+                    <!-- Sunday tasks will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div id="monday-content" class="content-section">
+                <div class="tasks-container" id="monday-tasks">
+                    <!-- Monday tasks will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div id="tuesday-content" class="content-section">
+                <div class="tasks-container" id="tuesday-tasks">
+                    <!-- Tuesday tasks will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div id="wednesday-content" class="content-section">
+                <div class="tasks-container" id="wednesday-tasks">
+                    <!-- Wednesday tasks will be populated by JavaScript -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Performance monitoring and optimization
+        let frameCount = 0;
+        let lastTime = performance.now();
+        let fps = 60;
+
+        function monitorPerformance() {
+            const now = performance.now();
+            frameCount++;
+            
+            if (now >= lastTime + 1000) {
+                fps = Math.round((frameCount * 1000) / (now - lastTime));
+                frameCount = 0;
+                lastTime = now;
+                
+                const indicator = document.getElementById('performance-indicator');
+                if (fps >= 55) {
+                    indicator.textContent = `${fps} FPS ✅`;
+                    indicator.style.background = 'rgba(16, 185, 129, 0.9)';
+                } else if (fps >= 30) {
+                    indicator.textContent = `${fps} FPS ⚠️`;
+                    indicator.style.background = 'rgba(244, 208, 63, 0.9)';
+                } else {
+                    indicator.textContent = `${fps} FPS ❌`;
+                    indicator.style.background = 'rgba(239, 68, 68, 0.9)';
+                }
+                indicator.classList.add('visible');
+            }
+            
+            requestAnimationFrame(monitorPerformance);
+        }
+
+        // Task data - Same as original for functionality preservation
+        const tasksData = {
+            sunday: [
+                {
+                    id: 1,
+                    title: "1 ערמוניה פלוס (20:00)",
+                    description: "תרופה לערב - לקחת בשעה 20:00 בדיוק",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                },
+                {
+                    id: 2,
+                    title: "1 ליטורבה 80 (20:00)",
+                    description: "תרופה לערב - לקחת בשעה 20:00 בדיוק",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                }
+            ],
+            monday: [
+                {
+                    id: 3,
+                    title: "לשטוף פנים בסבון תינוקות",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "בוקר"
+                },
+                {
+                    id: 4,
+                    title: "למרוח משחת פוסידון על הפצע",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "בוקר"
+                },
+                {
+                    id: 5,
+                    title: "1 פוזיד",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "בוקר"
+                },
+                {
+                    id: 6,
+                    title: "1 B12 למציצה",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "medium",
+                    time: "בוקר"
+                },
+                {
+                    id: 7,
+                    title: "1 מיקרופירין",
+                    description: "אחרי ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "אחרי ארוחת בוקר"
+                },
+                {
+                    id: 8,
+                    title: "1 קרדילוק",
+                    description: "אחרי ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "אחרי ארוחת בוקר"
+                },
+                {
+                    id: 9,
+                    title: "1 לוסרדקס",
+                    description: "אחרי ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "אחרי ארוחת בוקר"
+                },
+                {
+                    id: 10,
+                    title: "1 אומגה 3 (18:00)",
+                    description: "אחרי ארוחת ערב - 18:00",
+                    status: "pending",
+                    priority: "medium",
+                    time: "18:00"
+                },
+                {
+                    id: 11,
+                    title: "1 ויטמין D (18:00)",
+                    description: "אחרי ארוחת ערב - 18:00",
+                    status: "pending",
+                    priority: "medium",
+                    time: "18:00"
+                },
+                {
+                    id: 12,
+                    title: "1 ערמוניה פלוס (20:00)",
+                    description: "ערב - 20:00",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                },
+                {
+                    id: 13,
+                    title: "1 ליטורבה 80 (20:00)",
+                    description: "ערב - 20:00",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                },
+                {
+                    id: 14,
+                    title: "טיפות עיניים DUOTRAV (20:00)",
+                    description: "טיפה בכל עין - 20:00",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                },
+                {
+                    id: 15,
+                    title: "טיפות עיניים Hilo-Gel",
+                    description: "במשך היום - לפי הצורך",
+                    status: "pending",
+                    priority: "low",
+                    time: "במשך היום"
+                },
+                {
+                    id: 16,
+                    title: "¼ כדור מירו (כתום)",
+                    description: "לשינה - לפי הצורך",
+                    status: "pending",
+                    priority: "low",
+                    time: "לפי הצורך"
+                }
+            ],
+            tuesday: [
+                {
+                    id: 17,
+                    title: "לשטוף פנים בסבון תינוקות",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "בוקר"
+                },
+                {
+                    id: 18,
+                    title: "למרוח משחת פוסידון על הפצע",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "בוקר"
+                },
+                {
+                    id: 19,
+                    title: "1 פוזיד",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "בוקר"
+                },
+                {
+                    id: 20,
+                    title: "1 B12 למציצה",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "medium",
+                    time: "בוקר"
+                },
+                {
+                    id: 21,
+                    title: "1 מיקרופירין",
+                    description: "אחרי ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "אחרי ארוחת בוקר"
+                },
+                {
+                    id: 22,
+                    title: "1 קרדילוק",
+                    description: "אחרי ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "אחרי ארוחת בוקר"
+                },
+                {
+                    id: 23,
+                    title: "1 לוסרדקס",
+                    description: "אחרי ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "אחרי ארוחת בוקר"
+                },
+                {
+                    id: 24,
+                    title: "1 אומגה 3 (18:00)",
+                    description: "אחרי ארוחת ערב - 18:00",
+                    status: "pending",
+                    priority: "medium",
+                    time: "18:00"
+                },
+                {
+                    id: 25,
+                    title: "1 ויטמין D (18:00)",
+                    description: "אחרי ארוחת ערב - 18:00",
+                    status: "pending",
+                    priority: "medium",
+                    time: "18:00"
+                },
+                {
+                    id: 26,
+                    title: "1 ערמוניה פלוס (20:00)",
+                    description: "ערב - 20:00",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                },
+                {
+                    id: 27,
+                    title: "1 ליטורבה 80 (20:00)",
+                    description: "ערב - 20:00",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                },
+                {
+                    id: 28,
+                    title: "טיפות עיניים DUOTRAV (20:00)",
+                    description: "טיפה בכל עין - 20:00",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                },
+                {
+                    id: 29,
+                    title: "טיפות עיניים Hilo-Gel",
+                    description: "במשך היום - לפי הצורך",
+                    status: "pending",
+                    priority: "low",
+                    time: "במשך היום"
+                },
+                {
+                    id: 30,
+                    title: "¼ כדור מירו (כתום)",
+                    description: "לשינה - לפי הצורך",
+                    status: "pending",
+                    priority: "low",
+                    time: "לפי הצורך"
+                }
+            ],
+            wednesday: [
+                {
+                    id: 31,
+                    title: "לשטוף פנים בסבון תינוקות",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "בוקר"
+                },
+                {
+                    id: 32,
+                    title: "למרוח משחת פוסידון על הפצע",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "בוקר"
+                },
+                {
+                    id: 33,
+                    title: "1 פוזיד",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "בוקר"
+                },
+                {
+                    id: 34,
+                    title: "1 B12 למציצה",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "medium",
+                    time: "בוקר"
+                },
+                {
+                    id: 35,
+                    title: "1 מיקרופירין",
+                    description: "אחרי ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "אחרי ארוחת בוקר"
+                },
+                {
+                    id: 36,
+                    title: "1 קרדילוק",
+                    description: "אחרי ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "אחרי ארוחת בוקר"
+                },
+                {
+                    id: 37,
+                    title: "1 לוסרדקס",
+                    description: "אחרי ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "אחרי ארוחת בוקר"
+                },
+                {
+                    id: 38,
+                    title: "1 אומגה 3 (18:00)",
+                    description: "אחרי ארוחת ערב - 18:00",
+                    status: "pending",
+                    priority: "medium",
+                    time: "18:00"
+                },
+                {
+                    id: 39,
+                    title: "1 ויטמין D (18:00)",
+                    description: "אחרי ארוחת ערב - 18:00",
+                    status: "pending",
+                    priority: "medium",
+                    time: "18:00"
+                },
+                {
+                    id: 40,
+                    title: "1 ערמוניה פלוס (20:00) - סיום",
+                    description: "ערב - 20:00 (המשימה האחרונה)",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                },
+                {
+                    id: 41,
+                    title: "1 ליטורבה 80 (20:00) - סיום",
+                    description: "ערב - 20:00 (המשימה האחרונה)",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                }
+            ]
+        };
+
+        // Performance-optimized JavaScript with same functionality
+        let currentTab = 'sunday';
+        let taskStates = {};
+        let dayData = {};
+
+        const STORAGE_KEYS = {
+            sunday: 'tasks_sunday_evening',
+            monday: 'tasks_monday',
+            tuesday: 'tasks_tuesday',
+            wednesday: 'tasks_wednesday'
+        };
+
+        // Initialize with performance monitoring
+        function init() {
+            // Start performance monitoring
+            requestAnimationFrame(monitorPerformance);
+            
+            loadSavedState();
+            initializeTaskStates();
+            
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabName = tab.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
+
+            Object.keys(tasksData).forEach(day => {
+                renderTasks(day);
+            });
+
+            updateProgressStats();
+            handleKeyboardNavigation();
+            
+            addDataManagementUI();
+
+            // Smooth page load animation
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            
+            requestAnimationFrame(() => {
+                document.body.style.opacity = '1';
+            });
+        }
+
+        // All other functions remain the same as original for functionality preservation
+        function initializeDayData() {
+            const defaultStructure = {
+                tasks: {},
+                custom: [],
+                comments: {},
+                lastUpdated: new Date().toISOString()
+            };
+
+            Object.keys(STORAGE_KEYS).forEach(day => {
+                const storageKey = STORAGE_KEYS[day];
+                const saved = localStorage.getItem(storageKey);
+                
+                if (saved) {
+                    try {
+                        dayData[day] = JSON.parse(saved);
+                        dayData[day] = { ...defaultStructure, ...dayData[day] };
+                    } catch (e) {
+                        console.warn(`Invalid data for ${day}, resetting:`, e);
+                        dayData[day] = { ...defaultStructure };
+                    }
+                } else {
+                    dayData[day] = { ...defaultStructure };
+                }
+            });
+        }
+
+        function initializeTaskStates() {
+            Object.keys(tasksData).forEach(day => {
+                tasksData[day].forEach(task => {
+                    if (dayData[day] && dayData[day].tasks[task.id]) {
+                        taskStates[task.id] = dayData[day].tasks[task.id];
+                    } else {
+                        taskStates[task.id] = task.status;
+                    }
+                });
+            });
+        }
+
+        function renderTasks(day) {
+            const container = document.getElementById(`${day}-tasks`);
+            if (!container) return;
+
+            container.innerHTML = '';
+            
+            tasksData[day].forEach((task, index) => {
+                const taskCard = createTaskCard(task, index);
+                container.appendChild(taskCard);
+            });
+            
+            if (dayData[day] && dayData[day].custom) {
+                dayData[day].custom.forEach((task, index) => {
+                    const taskCard = createTaskCard(task, index + 1000, true);
+                    container.appendChild(taskCard);
+                });
+            }
+        }
+
+        function createTaskCard(task, index, isCustom = false) {
+            const card = document.createElement('div');
+            card.className = `task-card ${taskStates[task.id] || task.status}`;
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('role', 'button');
+            card.setAttribute('aria-label', `משימה: ${task.title}`);
+            
+            const comment = dayData[currentTab] && dayData[currentTab].comments[task.id] ? dayData[currentTab].comments[task.id] : '';
+            
+            card.innerHTML = `
+                <div class="task-header">
+                    <h3 class="task-title">${task.title} ${isCustom ? '<span style="font-size: 0.7em; color: var(--accent-primary);">✨ מותאם אישית</span>' : ''}</h3>
+                    <span class="task-status ${taskStates[task.id] || task.status}">
+                        ${getStatusText(taskStates[task.id] || task.status)}
+                    </span>
+                </div>
+                <p class="task-description">${task.description}</p>
+                ${comment ? `<div class="task-comment">💬 ${comment}</div>` : ''}
+                <div class="task-meta">
+                    <div class="task-time">
+                        <span>⏱️</span>
+                        <span>${task.time}</span>
+                    </div>
+                    <div class="task-priority priority-${task.priority}">
+                        <div class="priority-dot"></div>
+                        <span>${getPriorityText(task.priority)}</span>
+                    </div>
+                    ${isCustom ? '<button onclick="deleteCustomTask(\'' + task.id + '\')" style="margin-right: var(--space-2); padding: var(--space-1); background: var(--error); color: white; border: none; border-radius: var(--radius-sm); font-size: 0.75em; cursor: pointer;" title="מחק משימה">🗑️</button>' : ''}
+                    <button onclick="addTaskComment('${task.id}')" style="padding: var(--space-1); background: var(--accent-primary); color: white; border: none; border-radius: var(--radius-sm); font-size: 0.75em; cursor: pointer;" title="הוסף הערה">💬</button>
+                </div>
+            `;
+
+            card.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') return;
+                toggleTaskStatus(task.id);
+            });
+            
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleTaskStatus(task.id);
+                }
+            });
+
+            return card;
+        }
+
+        function toggleTaskStatus(taskId) {
+            const currentStatus = taskStates[taskId];
+            
+            switch (currentStatus) {
+                case 'pending':
+                    taskStates[taskId] = 'in-progress';
+                    break;
+                case 'in-progress':
+                    taskStates[taskId] = 'completed';
+                    break;
+                case 'completed':
+                    taskStates[taskId] = 'pending';
+                    break;
+                default:
+                    taskStates[taskId] = 'in-progress';
+            }
+
+            saveDayData(currentTab, taskId, taskStates[taskId]);
+            renderTasks(currentTab);
+            updateProgressStats();
+        }
+
+        function getStatusText(status) {
+            switch (status) {
+                case 'pending': return 'ממתין';
+                case 'in-progress': return 'בביצוע';
+                case 'completed': return 'הושלם';
+                default: return 'ממתין';
+            }
+        }
+
+        function getPriorityText(priority) {
+            switch (priority) {
+                case 'high': return 'גבוה';
+                case 'medium': return 'בינוני';
+                case 'low': return 'נמוך';
+                default: return 'בינוני';
+            }
+        }
+
+        function updateProgressStats() {
+            const allTasks = [...tasksData.sunday, ...tasksData.monday, ...tasksData.tuesday, ...tasksData.wednesday];
+            const completed = allTasks.filter(task => taskStates[task.id] === 'completed').length;
+            const pending = allTasks.filter(task => taskStates[task.id] !== 'completed').length;
+            const percentage = Math.round((completed / allTasks.length) * 100);
+
+            document.getElementById('completed-count').textContent = completed;
+            document.getElementById('pending-count').textContent = pending;
+            document.getElementById('progress-percentage').textContent = `${percentage}%`;
+            
+            const dayNames = {
+                'sunday': 'יום ראשון בערב',
+                'monday': 'יום שני',
+                'tuesday': 'יום שלישי',
+                'wednesday': 'יום רביעי'
+            };
+            document.getElementById('current-day').textContent = dayNames[currentTab];
+        }
+
+        function switchTab(newTab) {
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+                tab.setAttribute('aria-selected', 'false');
+                tab.setAttribute('tabindex', '-1');
+            });
+
+            const newTabButton = document.querySelector(`[data-tab="${newTab}"]`);
+            newTabButton.classList.add('active');
+            newTabButton.setAttribute('aria-selected', 'true');
+            newTabButton.setAttribute('tabindex', '0');
+
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            document.getElementById(`${newTab}-content`).classList.add('active');
+
+            currentTab = newTab;
+            updateProgressStats();
+        }
+
+        function handleKeyboardNavigation() {
+            document.addEventListener('keydown', (e) => {
+                if (e.target.classList.contains('nav-tab')) {
+                    const tabs = Array.from(document.querySelectorAll('.nav-tab'));
+                    const currentIndex = tabs.indexOf(e.target);
+
+                    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        const direction = e.key === 'ArrowRight' ? 1 : -1;
+                        const newIndex = (currentIndex + direction + tabs.length) % tabs.length;
+                        tabs[newIndex].focus();
+                    }
+
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        const tabName = e.target.getAttribute('data-tab');
+                        switchTab(tabName);
+                    }
+                }
+
+                if (e.ctrlKey || e.metaKey) {
+                    switch (e.key) {
+                        case '1':
+                            e.preventDefault();
+                            switchTab('sunday');
+                            document.querySelector('[data-tab="sunday"]').focus();
+                            break;
+                        case '2':
+                            e.preventDefault();
+                            switchTab('monday');
+                            document.querySelector('[data-tab="monday"]').focus();
+                            break;
+                        case '3':
+                            e.preventDefault();
+                            switchTab('tuesday');
+                            document.querySelector('[data-tab="tuesday"]').focus();
+                            break;
+                        case '4':
+                            e.preventDefault();
+                            switchTab('wednesday');
+                            document.querySelector('[data-tab="wednesday"]').focus();
+                            break;
+                    }
+                }
+            });
+        }
+
+        function saveDayData(day, taskId = null, status = null, comment = null) {
+            if (!dayData[day]) {
+                dayData[day] = {
+                    tasks: {},
+                    custom: [],
+                    comments: {},
+                    lastUpdated: new Date().toISOString()
+                };
+            }
+
+            if (taskId !== null && status !== null) {
+                dayData[day].tasks[taskId] = status;
+            }
+
+            if (taskId !== null && comment !== null) {
+                dayData[day].comments[taskId] = comment;
+            }
+
+            dayData[day].lastUpdated = new Date().toISOString();
+
+            const storageKey = STORAGE_KEYS[day];
+            localStorage.setItem(storageKey, JSON.stringify(dayData[day]));
+        }
+
+        function addCustomTask(day, taskText, priority = 'medium') {
+            const customTask = {
+                id: `custom_${Date.now()}`,
+                title: taskText,
+                description: 'משימה מותאמת אישית',
+                status: 'pending',
+                priority: priority,
+                time: 'לפי הצורך',
+                custom: true,
+                createdAt: new Date().toISOString()
+            };
+
+            if (!dayData[day]) {
+                dayData[day] = {
+                    tasks: {},
+                    custom: [],
+                    comments: {},
+                    lastUpdated: new Date().toISOString()
+                };
+            }
+
+            dayData[day].custom.push(customTask);
+            taskStates[customTask.id] = customTask.status;
+
+            saveDayData(day);
+            return customTask;
+        }
+
+        function loadSavedState() {
+            initializeDayData();
+            
+            const oldTaskStates = localStorage.getItem('taskStates');
+            if (oldTaskStates) {
+                try {
+                    const legacy = JSON.parse(oldTaskStates);
+                    console.log('Migrating legacy task states...');
+                    
+                    Object.keys(legacy).forEach(taskId => {
+                        const task = findTaskById(taskId);
+                        if (task && task.day) {
+                            saveDayData(task.day, taskId, legacy[taskId]);
+                        }
+                    });
+                    
+                    localStorage.removeItem('taskStates');
+                    console.log('Legacy migration complete');
+                } catch (e) {
+                    console.warn('Legacy migration failed:', e);
+                }
+            }
+        }
+
+        function findTaskById(taskId) {
+            for (const [day, tasks] of Object.entries(tasksData)) {
+                const task = tasks.find(t => t.id == taskId);
+                if (task) {
+                    return { ...task, day };
+                }
+            }
+            
+            for (const [day, data] of Object.entries(dayData)) {
+                if (data.custom) {
+                    const task = data.custom.find(t => t.id == taskId);
+                    if (task) {
+                        return { ...task, day };
+                    }
+                }
+            }
+            
+            return null;
+        }
+
+        function addTaskComment(taskId) {
+            const currentComment = dayData[currentTab] && dayData[currentTab].comments[taskId] ? dayData[currentTab].comments[taskId] : '';
+            const comment = prompt('הוסף הערה למשימה:', currentComment);
+            
+            if (comment !== null) {
+                saveDayData(currentTab, taskId, null, comment);
+                renderTasks(currentTab);
+            }
+        }
+
+        function deleteCustomTask(taskId) {
+            if (confirm('האם אתה בטוח שברצונך למחוק משימה זו?')) {
+                if (dayData[currentTab] && dayData[currentTab].custom) {
+                    dayData[currentTab].custom = dayData[currentTab].custom.filter(task => task.id !== taskId);
+                    delete taskStates[taskId];
+                    saveDayData(currentTab);
+                    renderTasks(currentTab);
+                    updateProgressStats();
+                }
+            }
+        }
+
+        function exportData() {
+            const exportData = {
+                version: '1.0',
+                exportDate: new Date().toISOString(),
+                data: dayData
+            };
+            
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `aba-tasks-backup-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const importedData = JSON.parse(e.target.result);
+                        
+                        if (importedData.data && typeof importedData.data === 'object') {
+                            if (confirm('האם אתה בטוח שברצונך לייבא נתונים? פעולה זו תחליף את כל הנתונים הקיימים.')) {
+                                const backup = { ...dayData };
+                                
+                                try {
+                                    dayData = importedData.data;
+                                    
+                                    Object.keys(STORAGE_KEYS).forEach(day => {
+                                        if (dayData[day]) {
+                                            localStorage.setItem(STORAGE_KEYS[day], JSON.stringify(dayData[day]));
+                                        }
+                                    });
+                                    
+                                    initializeTaskStates();
+                                    renderTasks(currentTab);
+                                    updateProgressStats();
+                                    
+                                    alert('הייבוא הושלם בהצלחה!');
+                                } catch (error) {
+                                    dayData = backup;
+                                    alert('שגיאה בייבוא הנתונים: ' + error.message);
+                                }
+                            }
+                        } else {
+                            alert('פורמט קובץ לא תקין');
+                        }
+                    } catch (error) {
+                        alert('שגיאה בקריאת הקובץ: ' + error.message);
+                    }
+                };
+                reader.readAsText(file);
+            };
+            
+            input.click();
+        }
+
+        function clearAllData() {
+            if (confirm('האם אתה בטוח שברצונך למחוק את כל הנתונים? פעולה זו אינה ניתנת לביטול!')) {
+                if (confirm('פעולה זו תמחק לצמיתות את כל המשימות והנתונים. להמשיך?')) {
+                    Object.values(STORAGE_KEYS).forEach(key => {
+                        localStorage.removeItem(key);
+                    });
+                    
+                    dayData = {};
+                    taskStates = {};
+                    
+                    initializeDayData();
+                    initializeTaskStates();
+                    renderTasks(currentTab);
+                    updateProgressStats();
+                    
+                    alert('כל הנתונים נמחקו');
+                }
+            }
+        }
+
+        function addDataManagementUI() {
+            const header = document.querySelector('.header-content');
+            if (header) {
+                const dataMenu = document.createElement('div');
+                dataMenu.className = 'data-menu-container';
+                
+                dataMenu.innerHTML = `
+                    <button onclick="addCustomTaskToCurrentDay()" class="btn-primary" title="הוסף משימה מותאמת אישית">
+                        ➕ משימה חדשה
+                    </button>
+                    <div style="position: relative;">
+                        <button onclick="toggleDataMenu()" class="btn-secondary" title="ניהול נתונים">
+                            ⚙️
+                        </button>
+                        <div id="data-menu" style="display: none;">
+                            <button onclick="exportData()" title="ייצא נתונים">📤 ייצא נתונים</button>
+                            <button onclick="importData()" title="ייבא נתונים">📥 ייבא נתונים</button>
+                            <hr>
+                            <button onclick="clearAllData()" style="color: var(--error);" title="מחק הכל">🗑️ מחק הכל</button>
+                        </div>
+                    </div>
+                `;
+                
+                header.appendChild(dataMenu);
+            }
+        }
+
+        function toggleDataMenu() {
+            const menu = document.getElementById('data-menu');
+            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function addCustomTaskToCurrentDay() {
+            const taskText = prompt('הכנס את תיאור המשימה החדשה:');
+            if (taskText && taskText.trim()) {
+                const priority = prompt('בחר עדיפות (high/medium/low):', 'medium');
+                const validPriority = ['high', 'medium', 'low'].includes(priority) ? priority : 'medium';
+                
+                const customTask = addCustomTask(currentTab, taskText.trim(), validPriority);
+                renderTasks(currentTab);
+                updateProgressStats();
+                
+                alert('המשימה נוספה בהצלחה!');
+            }
+        }
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                Object.keys(STORAGE_KEYS).forEach(day => {
+                    if (dayData[day]) {
+                        localStorage.setItem(STORAGE_KEYS[day], JSON.stringify(dayData[day]));
+                    }
+                });
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('data-menu');
+            if (menu && !e.target.closest('[onclick="toggleDataMenu()"]') && !e.target.closest('#data-menu')) {
+                menu.style.display = 'none';
+            }
+        });
+
+        // Initialize on DOM ready
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

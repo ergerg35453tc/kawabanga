@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <!-- 
+    ==============================================
+    ABA TASK MANAGER - LINEAR CONCEPT v2.1
+    Context Engineering Implementation
+    Date: 22-09-2025
+    Hebrew RTL Medical Protocol Dashboard
+    ==============================================
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>טיפול באבא - 3 ימים | Linear Quality</title>
+    
+    <!-- Atlas Font Family -->
+    <link rel="preload" href="Atlas/atlas-regular-aaa.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="Atlas/atlas-medium-aaa.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="Atlas/atlas-bold-aaa.ttf" as="font" type="font/ttf" crossorigin>
+    
+    <style>
+        @font-face {
+            font-family: 'Atlas';
+            src: url('Atlas/atlas-regular-aaa.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Atlas';
+            src: url('Atlas/atlas-medium-aaa.ttf') format('truetype');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Atlas';
+            src: url('Atlas/atlas-bold-aaa.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* Linear-inspired design system */
+        :root {
+            /* Color palette inspired by Linear */
+            --bg-primary: #0d0e11;
+            --bg-secondary: #16171b;
+            --bg-tertiary: #1c1d21;
+            --bg-surface: #212227;
+            --bg-hover: #262730;
+            --bg-active: #2d2e37;
+            
+            --border-primary: #2c2d33;
+            --border-secondary: #393a41;
+            --border-focus: #5e6ad2;
+            
+            --text-primary: #f6f6f7;
+            --text-secondary: #9ca3af;
+            --text-tertiary: #6b7280;
+            --text-inverse: #0d0e11;
+            
+            --accent-primary: #5e6ad2;
+            --accent-secondary: #818cf8;
+            --accent-hover: #6366f1;
+            
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            
+            /* Typography */
+            --font-family: 'Atlas', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+            
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+            
+            /* Radius */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* Layout */
+        .app-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-primary);
+            padding: var(--space-4) var(--space-6);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--text-primary);
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--accent-primary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-3);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Main content */
+        .main-content {
+            flex: 1;
+            padding: var(--space-8) var(--space-6);
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Navigation tabs */
+        .nav-tabs {
+            display: flex;
+            gap: var(--space-1);
+            margin-bottom: var(--space-8);
+            background: var(--bg-secondary);
+            padding: var(--space-1);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-primary);
+        }
+
+        .nav-tab {
+            padding: var(--space-3) var(--space-4);
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-family: var(--font-family);
+            font-size: 0.875rem;
+            font-weight: 500;
+            position: relative;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .nav-tab:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .nav-tab.active {
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-tab:focus {
+            outline: 2px solid var(--border-focus);
+            outline-offset: 2px;
+        }
+
+        /* Content sections */
+        .content-section {
+            display: none;
+            animation: fadeIn var(--transition-normal);
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Progress overview */
+        .progress-overview {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .progress-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: var(--space-4);
+            color: var(--text-primary);
+        }
+
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+        }
+
+        .progress-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--space-4);
+            text-align: center;
+            transition: all var(--transition-fast);
+        }
+
+        .progress-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-1px);
+        }
+
+        .progress-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: var(--space-2);
+        }
+
+        .progress-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Task cards */
+        .tasks-container {
+            display: grid;
+            gap: var(--space-4);
+        }
+
+        .task-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-5);
+            transition: all var(--transition-fast);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .task-card:hover {
+            border-color: var(--border-secondary);
+            background: var(--bg-tertiary);
+            transform: translateY(-1px);
+        }
+
+        .task-card.completed {
+            border-color: var(--success);
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(16, 185, 129, 0.05) 100%);
+        }
+
+        .task-card.completed::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--success);
+        }
+
+        .task-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-3);
+        }
+
+        .task-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .task-status {
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .task-status.pending {
+            background: rgba(107, 114, 128, 0.2);
+            color: var(--text-secondary);
+        }
+
+        .task-status.in-progress {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .task-status.completed {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .task-description {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            margin-bottom: var(--space-4);
+        }
+
+        .task-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .task-time {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .task-priority {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .priority-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .priority-high .priority-dot {
+            background: var(--error);
+        }
+
+        .priority-medium .priority-dot {
+            background: var(--warning);
+        }
+
+        .priority-low .priority-dot {
+            background: var(--text-tertiary);
+        }
+
+        /* Keyboard focus styles */
+        .task-card:focus {
+            outline: 2px solid var(--border-focus);
+            outline-offset: 2px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header {
+                padding: var(--space-3) var(--space-4);
+            }
+
+            .main-content {
+                padding: var(--space-6) var(--space-4);
+            }
+
+            .nav-tabs {
+                overflow-x: auto;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+
+            .nav-tabs::-webkit-scrollbar {
+                display: none;
+            }
+
+            .nav-tab {
+                min-width: 100px;
+                white-space: nowrap;
+            }
+
+            .progress-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .task-card {
+                padding: var(--space-4);
+            }
+        }
+
+        /* Loading states */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--border-primary);
+            border-radius: 50%;
+            border-top-color: var(--accent-primary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-secondary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-tertiary);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">א</div>
+                    <span>טיפול באבא - 3 ימים</span>
+                </div>
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>פעיל</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Navigation Tabs -->
+            <nav class="nav-tabs" role="tablist">
+                <button class="nav-tab active" data-tab="sunday" role="tab" aria-selected="true" tabindex="0">
+                    יום ראשון בערב
+                </button>
+                <button class="nav-tab" data-tab="monday" role="tab" aria-selected="false" tabindex="-1">
+                    יום שני
+                </button>
+                <button class="nav-tab" data-tab="tuesday" role="tab" aria-selected="false" tabindex="-1">
+                    יום שלישי
+                </button>
+                <button class="nav-tab" data-tab="wednesday" role="tab" aria-selected="false" tabindex="-1">
+                    יום רביעי
+                </button>
+            </nav>
+
+            <!-- Progress Overview -->
+            <section class="progress-overview">
+                <h2 class="progress-title">סקירת התקדמות</h2>
+                <div class="progress-grid">
+                    <div class="progress-card">
+                        <div class="progress-number" id="completed-count">0</div>
+                        <div class="progress-label">משימות שהושלמו</div>
+                    </div>
+                    <div class="progress-card">
+                        <div class="progress-number" id="pending-count">8</div>
+                        <div class="progress-label">משימות ממתינות</div>
+                    </div>
+                    <div class="progress-card">
+                        <div class="progress-number" id="progress-percentage">0%</div>
+                        <div class="progress-label">התקדמות כללית</div>
+                    </div>
+                    <div class="progress-card">
+                        <div class="progress-number" id="current-day">יום ראשון</div>
+                        <div class="progress-label">יום נוכחי</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Content Sections -->
+            <div id="sunday-content" class="content-section active">
+                <div class="tasks-container" id="sunday-tasks">
+                    <!-- Sunday tasks will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div id="monday-content" class="content-section">
+                <div class="tasks-container" id="monday-tasks">
+                    <!-- Monday tasks will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div id="tuesday-content" class="content-section">
+                <div class="tasks-container" id="tuesday-tasks">
+                    <!-- Tuesday tasks will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div id="wednesday-content" class="content-section">
+                <div class="tasks-container" id="wednesday-tasks">
+                    <!-- Wednesday tasks will be populated by JavaScript -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Task data
+        // Medical Protocol Tasks - Context Engineering Implementation v2.1
+        const tasksData = {
+            sunday: [
+                {
+                    id: 1,
+                    title: "1 ערמוניה פלוס (20:00)",
+                    description: "תרופה לערב - לקחת בשעה 20:00 בדיוק",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                },
+                {
+                    id: 2,
+                    title: "1 ליטורבה 80 (20:00)",
+                    description: "תרופה לערב - לקחת בשעה 20:00 בדיוק",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                }
+            ],
+            monday: [
+                {
+                    id: 3,
+                    title: "לשטוף פנים בסבון תינוקות",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "בוקר"
+                },
+                {
+                    id: 4,
+                    title: "למרוח משחת פוסידון על הפצע",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "בוקר"
+                },
+                {
+                    id: 5,
+                    title: "1 פוזיד",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "בוקר"
+                },
+                {
+                    id: 6,
+                    title: "1 B12 למציצה",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "medium",
+                    time: "בוקר"
+                },
+                {
+                    id: 7,
+                    title: "1 מיקרופירין",
+                    description: "אחרי ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "אחרי ארוחת בוקר"
+                },
+                {
+                    id: 8,
+                    title: "1 קרדילוק",
+                    description: "אחרי ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "אחרי ארוחת בוקר"
+                },
+                {
+                    id: 9,
+                    title: "1 לוסרדקס",
+                    description: "אחרי ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "אחרי ארוחת בוקר"
+                },
+                {
+                    id: 10,
+                    title: "1 אומגה 3 (18:00)",
+                    description: "אחרי ארוחת ערב - 18:00",
+                    status: "pending",
+                    priority: "medium",
+                    time: "18:00"
+                },
+                {
+                    id: 11,
+                    title: "1 ויטמין D (18:00)",
+                    description: "אחרי ארוחת ערב - 18:00",
+                    status: "pending",
+                    priority: "medium",
+                    time: "18:00"
+                },
+                {
+                    id: 12,
+                    title: "1 ערמוניה פלוס (20:00)",
+                    description: "ערב - 20:00",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                },
+                {
+                    id: 13,
+                    title: "1 ליטורבה 80 (20:00)",
+                    description: "ערב - 20:00",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                },
+                {
+                    id: 14,
+                    title: "טיפות עיניים DUOTRAV (20:00)",
+                    description: "טיפה בכל עין - 20:00",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                },
+                {
+                    id: 15,
+                    title: "טיפות עיניים Hilo-Gel",
+                    description: "במשך היום - לפי הצורך",
+                    status: "pending",
+                    priority: "low",
+                    time: "במשך היום"
+                },
+                {
+                    id: 16,
+                    title: "¼ כדור מירו (כתום)",
+                    description: "לשינה - לפי הצורך",
+                    status: "pending",
+                    priority: "low",
+                    time: "לפי הצורך"
+                }
+            ],
+            tuesday: [
+                {
+                    id: 17,
+                    title: "לשטוף פנים בסבון תינוקות",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "בוקר"
+                },
+                {
+                    id: 18,
+                    title: "למרוח משחת פוסידון על הפצע",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "בוקר"
+                },
+                {
+                    id: 19,
+                    title: "1 פוזיד",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "בוקר"
+                },
+                {
+                    id: 20,
+                    title: "1 B12 למציצה",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "medium",
+                    time: "בוקר"
+                },
+                {
+                    id: 21,
+                    title: "1 מיקרופירין",
+                    description: "אחרי ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "אחרי ארוחת בוקר"
+                },
+                {
+                    id: 22,
+                    title: "1 קרדילוק",
+                    description: "אחרי ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "אחרי ארוחת בוקר"
+                },
+                {
+                    id: 23,
+                    title: "1 לוסרדקס",
+                    description: "אחרי ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "אחרי ארוחת בוקר"
+                },
+                {
+                    id: 24,
+                    title: "1 אומגה 3 (18:00)",
+                    description: "אחרי ארוחת ערב - 18:00",
+                    status: "pending",
+                    priority: "medium",
+                    time: "18:00"
+                },
+                {
+                    id: 25,
+                    title: "1 ויטמין D (18:00)",
+                    description: "אחרי ארוחת ערב - 18:00",
+                    status: "pending",
+                    priority: "medium",
+                    time: "18:00"
+                },
+                {
+                    id: 26,
+                    title: "1 ערמוניה פלוס (20:00)",
+                    description: "ערב - 20:00",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                },
+                {
+                    id: 27,
+                    title: "1 ליטורבה 80 (20:00)",
+                    description: "ערב - 20:00",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                },
+                {
+                    id: 28,
+                    title: "טיפות עיניים DUOTRAV (20:00)",
+                    description: "טיפה בכל עין - 20:00",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                },
+                {
+                    id: 29,
+                    title: "טיפות עיניים Hilo-Gel",
+                    description: "במשך היום - לפי הצורך",
+                    status: "pending",
+                    priority: "low",
+                    time: "במשך היום"
+                },
+                {
+                    id: 30,
+                    title: "¼ כדור מירו (כתום)",
+                    description: "לשינה - לפי הצורך",
+                    status: "pending",
+                    priority: "low",
+                    time: "לפי הצורך"
+                }
+            ],
+            wednesday: [
+                {
+                    id: 31,
+                    title: "לשטוף פנים בסבון תינוקות",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "בוקר"
+                },
+                {
+                    id: 32,
+                    title: "למרוח משחת פוסידון על הפצע",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "בוקר"
+                },
+                {
+                    id: 33,
+                    title: "1 פוזיד",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "בוקר"
+                },
+                {
+                    id: 34,
+                    title: "1 B12 למציצה",
+                    description: "בוקר - לפני ארוחת בוקר",
+                    status: "pending",
+                    priority: "medium",
+                    time: "בוקר"
+                },
+                {
+                    id: 35,
+                    title: "1 מיקרופירין",
+                    description: "אחרי ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "אחרי ארוחת בוקר"
+                },
+                {
+                    id: 36,
+                    title: "1 קרדילוק",
+                    description: "אחרי ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "אחרי ארוחת בוקר"
+                },
+                {
+                    id: 37,
+                    title: "1 לוסרדקס",
+                    description: "אחרי ארוחת בוקר",
+                    status: "pending",
+                    priority: "high",
+                    time: "אחרי ארוחת בוקר"
+                },
+                {
+                    id: 38,
+                    title: "1 אומגה 3 (18:00)",
+                    description: "אחרי ארוחת ערב - 18:00",
+                    status: "pending",
+                    priority: "medium",
+                    time: "18:00"
+                },
+                {
+                    id: 39,
+                    title: "1 ויטמין D (18:00)",
+                    description: "אחרי ארוחת ערב - 18:00",
+                    status: "pending",
+                    priority: "medium",
+                    time: "18:00"
+                },
+                {
+                    id: 40,
+                    title: "1 ערמוניה פלוס (20:00) - סיום",
+                    description: "ערב - 20:00 (המשימה האחרונה)",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                },
+                {
+                    id: 41,
+                    title: "1 ליטורבה 80 (20:00) - סיום",
+                    description: "ערב - 20:00 (המשימה האחרונה)",
+                    status: "pending",
+                    priority: "high",
+                    time: "20:00"
+                }
+            ]
+        };
+
+        // State management
+        let currentTab = 'sunday';
+        let taskStates = {};
+        let dayData = {};
+
+        // Storage keys for each day
+        const STORAGE_KEYS = {
+            sunday: 'tasks_sunday_evening',
+            monday: 'tasks_monday',
+            tuesday: 'tasks_tuesday',
+            wednesday: 'tasks_wednesday'
+        };
+
+        // Initialize day data structure
+        function initializeDayData() {
+            const defaultStructure = {
+                tasks: {},
+                custom: [],
+                comments: {},
+                lastUpdated: new Date().toISOString()
+            };
+
+            Object.keys(STORAGE_KEYS).forEach(day => {
+                const storageKey = STORAGE_KEYS[day];
+                const saved = localStorage.getItem(storageKey);
+                
+                if (saved) {
+                    try {
+                        dayData[day] = JSON.parse(saved);
+                        // Ensure all required properties exist
+                        dayData[day] = { ...defaultStructure, ...dayData[day] };
+                    } catch (e) {
+                        console.warn(`Invalid data for ${day}, resetting:`, e);
+                        dayData[day] = { ...defaultStructure };
+                    }
+                } else {
+                    dayData[day] = { ...defaultStructure };
+                }
+            });
+        }
+
+        // Initialize task states from day data
+        function initializeTaskStates() {
+            Object.keys(tasksData).forEach(day => {
+                tasksData[day].forEach(task => {
+                    // Check if we have saved state for this task
+                    if (dayData[day] && dayData[day].tasks[task.id]) {
+                        taskStates[task.id] = dayData[day].tasks[task.id];
+                    } else {
+                        taskStates[task.id] = task.status;
+                    }
+                });
+            });
+        }
+
+        // Render tasks for a specific day
+        function renderTasks(day) {
+            const container = document.getElementById(`${day}-tasks`);
+            if (!container) return;
+
+            container.innerHTML = '';
+            
+            // Render predefined tasks
+            tasksData[day].forEach((task, index) => {
+                const taskCard = createTaskCard(task, index);
+                container.appendChild(taskCard);
+            });
+            
+            // Render custom tasks for this day
+            if (dayData[day] && dayData[day].custom) {
+                dayData[day].custom.forEach((task, index) => {
+                    const taskCard = createTaskCard(task, index + 1000, true);
+                    container.appendChild(taskCard);
+                });
+            }
+        }
+
+        // Create task card element
+        function createTaskCard(task, index, isCustom = false) {
+            const card = document.createElement('div');
+            card.className = `task-card ${taskStates[task.id] || task.status}`;
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('role', 'button');
+            card.setAttribute('aria-label', `משימה: ${task.title}`);
+            
+            const comment = dayData[currentTab] && dayData[currentTab].comments[task.id] ? dayData[currentTab].comments[task.id] : '';
+            
+            card.innerHTML = `
+                <div class="task-header">
+                    <h3 class="task-title">${task.title} ${isCustom ? '<span style="font-size: 0.7em; color: var(--accent-primary);">✨ מותאם אישית</span>' : ''}</h3>
+                    <span class="task-status ${taskStates[task.id] || task.status}">
+                        ${getStatusText(taskStates[task.id] || task.status)}
+                    </span>
+                </div>
+                <p class="task-description">${task.description}</p>
+                ${comment ? `<div class="task-comment" style="background: var(--bg-tertiary); padding: var(--space-2); border-radius: var(--radius-sm); margin: var(--space-2) 0; font-size: 0.875em; color: var(--text-secondary);">💬 ${comment}</div>` : ''}
+                <div class="task-meta">
+                    <div class="task-time">
+                        <span>⏱️</span>
+                        <span>${task.time}</span>
+                    </div>
+                    <div class="task-priority priority-${task.priority}">
+                        <div class="priority-dot"></div>
+                        <span>${getPriorityText(task.priority)}</span>
+                    </div>
+                    ${isCustom ? '<button onclick="deleteCustomTask(\'' + task.id + '\')" style="margin-right: var(--space-2); padding: var(--space-1); background: var(--error); color: white; border: none; border-radius: var(--radius-sm); font-size: 0.75em; cursor: pointer;" title="מחק משימה">🗑️</button>' : ''}
+                    <button onclick="addTaskComment('${task.id}')" style="padding: var(--space-1); background: var(--accent-primary); color: white; border: none; border-radius: var(--radius-sm); font-size: 0.75em; cursor: pointer;" title="הוסף הערה">💬</button>
+                </div>
+            `;
+
+            // Add click handler
+            card.addEventListener('click', (e) => {
+                // Don't toggle if clicking on buttons
+                if (e.target.tagName === 'BUTTON') return;
+                toggleTaskStatus(task.id);
+            });
+            
+            // Add keyboard handler
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleTaskStatus(task.id);
+                }
+            });
+
+            return card;
+        }
+
+        // Toggle task status
+        function toggleTaskStatus(taskId) {
+            const currentStatus = taskStates[taskId];
+            
+            switch (currentStatus) {
+                case 'pending':
+                    taskStates[taskId] = 'in-progress';
+                    break;
+                case 'in-progress':
+                    taskStates[taskId] = 'completed';
+                    break;
+                case 'completed':
+                    taskStates[taskId] = 'pending';
+                    break;
+                default:
+                    taskStates[taskId] = 'in-progress';
+            }
+
+            // Update day data with new task state
+            saveDayData(currentTab, taskId, taskStates[taskId]);
+
+            // Re-render the current tab
+            renderTasks(currentTab);
+            updateProgressStats();
+        }
+
+        // Get status text in Hebrew
+        function getStatusText(status) {
+            switch (status) {
+                case 'pending': return 'ממתין';
+                case 'in-progress': return 'בביצוע';
+                case 'completed': return 'הושלם';
+                default: return 'ממתין';
+            }
+        }
+
+        // Get priority text in Hebrew
+        function getPriorityText(priority) {
+            switch (priority) {
+                case 'high': return 'גבוה';
+                case 'medium': return 'בינוני';
+                case 'low': return 'נמוך';
+                default: return 'בינוני';
+            }
+        }
+
+        // Update progress statistics
+        function updateProgressStats() {
+            const allTasks = [...tasksData.sunday, ...tasksData.monday, ...tasksData.tuesday, ...tasksData.wednesday];
+            const completed = allTasks.filter(task => taskStates[task.id] === 'completed').length;
+            const pending = allTasks.filter(task => taskStates[task.id] !== 'completed').length;
+            const percentage = Math.round((completed / allTasks.length) * 100);
+
+            document.getElementById('completed-count').textContent = completed;
+            document.getElementById('pending-count').textContent = pending;
+            document.getElementById('progress-percentage').textContent = `${percentage}%`;
+            
+            // Update current day
+            const dayNames = {
+                'sunday': 'יום ראשון בערב',
+                'monday': 'יום שני',
+                'tuesday': 'יום שלישי',
+                'wednesday': 'יום רביעי'
+            };
+            document.getElementById('current-day').textContent = dayNames[currentTab];
+        }
+
+        // Switch tabs
+        function switchTab(newTab) {
+            // Update tab buttons
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+                tab.setAttribute('aria-selected', 'false');
+                tab.setAttribute('tabindex', '-1');
+            });
+
+            const newTabButton = document.querySelector(`[data-tab="${newTab}"]`);
+            newTabButton.classList.add('active');
+            newTabButton.setAttribute('aria-selected', 'true');
+            newTabButton.setAttribute('tabindex', '0');
+
+            // Update content sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            document.getElementById(`${newTab}-content`).classList.add('active');
+
+            currentTab = newTab;
+            updateProgressStats();
+        }
+
+        // Keyboard navigation
+        function handleKeyboardNavigation() {
+            document.addEventListener('keydown', (e) => {
+                // Tab navigation with arrow keys
+                if (e.target.classList.contains('nav-tab')) {
+                    const tabs = Array.from(document.querySelectorAll('.nav-tab'));
+                    const currentIndex = tabs.indexOf(e.target);
+
+                    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        const direction = e.key === 'ArrowRight' ? 1 : -1;
+                        const newIndex = (currentIndex + direction + tabs.length) % tabs.length;
+                        tabs[newIndex].focus();
+                    }
+
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        const tabName = e.target.getAttribute('data-tab');
+                        switchTab(tabName);
+                    }
+                }
+
+                // Global shortcuts
+                if (e.ctrlKey || e.metaKey) {
+                    switch (e.key) {
+                        case '1':
+                            e.preventDefault();
+                            switchTab('sunday');
+                            document.querySelector('[data-tab="sunday"]').focus();
+                            break;
+                        case '2':
+                            e.preventDefault();
+                            switchTab('monday');
+                            document.querySelector('[data-tab="monday"]').focus();
+                            break;
+                        case '3':
+                            e.preventDefault();
+                            switchTab('tuesday');
+                            document.querySelector('[data-tab="tuesday"]').focus();
+                            break;
+                        case '4':
+                            e.preventDefault();
+                            switchTab('wednesday');
+                            document.querySelector('[data-tab="wednesday"]').focus();
+                            break;
+                    }
+                }
+            });
+        }
+
+        // Save day data to localStorage
+        function saveDayData(day, taskId = null, status = null, comment = null) {
+            if (!dayData[day]) {
+                dayData[day] = {
+                    tasks: {},
+                    custom: [],
+                    comments: {},
+                    lastUpdated: new Date().toISOString()
+                };
+            }
+
+            if (taskId !== null && status !== null) {
+                dayData[day].tasks[taskId] = status;
+            }
+
+            if (taskId !== null && comment !== null) {
+                dayData[day].comments[taskId] = comment;
+            }
+
+            dayData[day].lastUpdated = new Date().toISOString();
+
+            const storageKey = STORAGE_KEYS[day];
+            localStorage.setItem(storageKey, JSON.stringify(dayData[day]));
+        }
+
+        // Add custom task
+        function addCustomTask(day, taskText, priority = 'medium') {
+            const customTask = {
+                id: `custom_${Date.now()}`,
+                title: taskText,
+                description: 'משימה מותאמת אישית',
+                status: 'pending',
+                priority: priority,
+                time: 'לפי הצורך',
+                custom: true,
+                createdAt: new Date().toISOString()
+            };
+
+            if (!dayData[day]) {
+                dayData[day] = {
+                    tasks: {},
+                    custom: [],
+                    comments: {},
+                    lastUpdated: new Date().toISOString()
+                };
+            }
+
+            dayData[day].custom.push(customTask);
+            taskStates[customTask.id] = customTask.status;
+
+            saveDayData(day);
+            return customTask;
+        }
+
+        // Load saved state
+        function loadSavedState() {
+            initializeDayData();
+            
+            // Legacy migration: if old taskStates exists, migrate it
+            const oldTaskStates = localStorage.getItem('taskStates');
+            if (oldTaskStates) {
+                try {
+                    const legacy = JSON.parse(oldTaskStates);
+                    console.log('Migrating legacy task states...');
+                    
+                    // Migrate to new structure
+                    Object.keys(legacy).forEach(taskId => {
+                        const task = findTaskById(taskId);
+                        if (task && task.day) {
+                            saveDayData(task.day, taskId, legacy[taskId]);
+                        }
+                    });
+                    
+                    // Remove old format
+                    localStorage.removeItem('taskStates');
+                    console.log('Legacy migration complete');
+                } catch (e) {
+                    console.warn('Legacy migration failed:', e);
+                }
+            }
+        }
+
+        // Find task by ID across all days
+        function findTaskById(taskId) {
+            for (const [day, tasks] of Object.entries(tasksData)) {
+                const task = tasks.find(t => t.id == taskId);
+                if (task) {
+                    return { ...task, day };
+                }
+            }
+            
+            // Check custom tasks
+            for (const [day, data] of Object.entries(dayData)) {
+                if (data.custom) {
+                    const task = data.custom.find(t => t.id == taskId);
+                    if (task) {
+                        return { ...task, day };
+                    }
+                }
+            }
+            
+            return null;
+        }
+
+        // Add task comment
+        function addTaskComment(taskId) {
+            const currentComment = dayData[currentTab] && dayData[currentTab].comments[taskId] ? dayData[currentTab].comments[taskId] : '';
+            const comment = prompt('הוסף הערה למשימה:', currentComment);
+            
+            if (comment !== null) {
+                saveDayData(currentTab, taskId, null, comment);
+                renderTasks(currentTab);
+            }
+        }
+
+        // Delete custom task
+        function deleteCustomTask(taskId) {
+            if (confirm('האם אתה בטוח שברצונך למחוק משימה זו?')) {
+                if (dayData[currentTab] && dayData[currentTab].custom) {
+                    dayData[currentTab].custom = dayData[currentTab].custom.filter(task => task.id !== taskId);
+                    delete taskStates[taskId];
+                    saveDayData(currentTab);
+                    renderTasks(currentTab);
+                    updateProgressStats();
+                }
+            }
+        }
+
+        // Export data
+        function exportData() {
+            const exportData = {
+                version: '1.0',
+                exportDate: new Date().toISOString(),
+                data: dayData
+            };
+            
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `aba-tasks-backup-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        // Import data
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const importedData = JSON.parse(e.target.result);
+                        
+                        if (importedData.data && typeof importedData.data === 'object') {
+                            if (confirm('האם אתה בטוח שברצונך לייבא נתונים? פעולה זו תחליף את כל הנתונים הקיימים.')) {
+                                // Backup current data
+                                const backup = { ...dayData };
+                                
+                                try {
+                                    // Import new data
+                                    dayData = importedData.data;
+                                    
+                                    // Save to localStorage
+                                    Object.keys(STORAGE_KEYS).forEach(day => {
+                                        if (dayData[day]) {
+                                            localStorage.setItem(STORAGE_KEYS[day], JSON.stringify(dayData[day]));
+                                        }
+                                    });
+                                    
+                                    // Reload task states
+                                    initializeTaskStates();
+                                    renderTasks(currentTab);
+                                    updateProgressStats();
+                                    
+                                    alert('הייבוא הושלם בהצלחה!');
+                                } catch (error) {
+                                    // Restore backup on error
+                                    dayData = backup;
+                                    alert('שגיאה בייבוא הנתונים: ' + error.message);
+                                }
+                            }
+                        } else {
+                            alert('פורמט קובץ לא תקין');
+                        }
+                    } catch (error) {
+                        alert('שגיאה בקריאת הקובץ: ' + error.message);
+                    }
+                };
+                reader.readAsText(file);
+            };
+            
+            input.click();
+        }
+
+        // Clear all data
+        function clearAllData() {
+            if (confirm('האם אתה בטוח שברצונך למחוק את כל הנתונים? פעולה זו אינה ניתנת לביטול!')) {
+                if (confirm('פעולה זו תמחק לצמיתות את כל המשימות והנתונים. להמשיך?')) {
+                    Object.values(STORAGE_KEYS).forEach(key => {
+                        localStorage.removeItem(key);
+                    });
+                    
+                    // Reset all data
+                    dayData = {};
+                    taskStates = {};
+                    
+                    // Reinitialize
+                    initializeDayData();
+                    initializeTaskStates();
+                    renderTasks(currentTab);
+                    updateProgressStats();
+                    
+                    alert('כל הנתונים נמחקו');
+                }
+            }
+        }
+
+        // Initialize the application
+        function init() {
+            loadSavedState();
+            initializeTaskStates();
+            
+            // Set up tab event listeners
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabName = tab.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
+
+            // Render initial content
+            Object.keys(tasksData).forEach(day => {
+                renderTasks(day);
+            });
+
+            updateProgressStats();
+            handleKeyboardNavigation();
+            
+            // Add data management UI
+            addDataManagementUI();
+
+            // Add loading complete animation
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.3s ease';
+            
+            requestAnimationFrame(() => {
+                document.body.style.opacity = '1';
+            });
+        }
+
+        // Start the application when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+
+        // Add data management UI
+        function addDataManagementUI() {
+            const header = document.querySelector('.header-content');
+            if (header) {
+                const dataMenu = document.createElement('div');
+                dataMenu.style.cssText = 'display: flex; align-items: center; gap: var(--space-2);';
+                
+                dataMenu.innerHTML = `
+                    <button onclick="addCustomTaskToCurrentDay()" style="padding: var(--space-2) var(--space-3); background: var(--accent-primary); color: white; border: none; border-radius: var(--radius-md); font-size: 0.875rem; cursor: pointer;" title="הוסף משימה מותאמת אישית">
+                        ➕ משימה חדשה
+                    </button>
+                    <div style="position: relative;">
+                        <button onclick="toggleDataMenu()" style="padding: var(--space-2); background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border-primary); border-radius: var(--radius-md); cursor: pointer;" title="ניהול נתונים">
+                            ⚙️
+                        </button>
+                        <div id="data-menu" style="display: none; position: absolute; top: 100%; left: 0; background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: var(--radius-md); padding: var(--space-2); min-width: 150px; z-index: 1000; box-shadow: var(--shadow-lg);">
+                            <button onclick="exportData()" style="display: block; width: 100%; padding: var(--space-2); background: none; border: none; color: var(--text-primary); cursor: pointer; text-align: right; border-radius: var(--radius-sm);" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='none'">📤 ייצא נתונים</button>
+                            <button onclick="importData()" style="display: block; width: 100%; padding: var(--space-2); background: none; border: none; color: var(--text-primary); cursor: pointer; text-align: right; border-radius: var(--radius-sm);" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='none'">📥 ייבא נתונים</button>
+                            <hr style="margin: var(--space-2) 0; border: none; border-top: 1px solid var(--border-primary);">
+                            <button onclick="clearAllData()" style="display: block; width: 100%; padding: var(--space-2); background: none; border: none; color: var(--error); cursor: pointer; text-align: right; border-radius: var(--radius-sm);" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='none'">🗑️ מחק הכל</button>
+                        </div>
+                    </div>
+                `;
+                
+                header.appendChild(dataMenu);
+            }
+        }
+
+        // Toggle data menu
+        function toggleDataMenu() {
+            const menu = document.getElementById('data-menu');
+            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Add custom task to current day
+        function addCustomTaskToCurrentDay() {
+            const taskText = prompt('הכנס את תיאור המשימה החדשה:');
+            if (taskText && taskText.trim()) {
+                const priority = prompt('בחר עדיפות (high/medium/low):', 'medium');
+                const validPriority = ['high', 'medium', 'low'].includes(priority) ? priority : 'medium';
+                
+                const customTask = addCustomTask(currentTab, taskText.trim(), validPriority);
+                renderTasks(currentTab);
+                updateProgressStats();
+                
+                alert('המשימה נוספה בהצלחה!');
+            }
+        }
+
+        // Handle visibility change for state persistence
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                // Save all current states
+                Object.keys(STORAGE_KEYS).forEach(day => {
+                    if (dayData[day]) {
+                        localStorage.setItem(STORAGE_KEYS[day], JSON.stringify(dayData[day]));
+                    }
+                });
+            }
+        });
+
+        // Close data menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('data-menu');
+            if (menu && !e.target.closest('[onclick="toggleDataMenu()"]') && !e.target.closest('#data-menu')) {
+                menu.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
