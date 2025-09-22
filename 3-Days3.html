@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>טיפול באבא - Apple 2325</title>
+  <meta name="color-scheme" content="dark light" />
+  <style>
+    :root{
+      --glass-bg: rgba(255,255,255,.08);
+      --glass-border: rgba(255,255,255,.15);
+      --glass-shadow: rgba(0,0,0,.1);
+      --primary-blue:#007AFF;
+      --primary-green:#34C759;
+      --primary-red:#FF3B30;
+      --primary-orange:#FF9500;
+      --primary-purple:#AF52DE;
+      --text-primary:#FFFFFF;
+      --text-secondary:rgba(255,255,255,.7);
+      --text-tertiary:rgba(255,255,255,.55);
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Hebrew", "Helvetica Neue", Arial, sans-serif;
+      direction:rtl;
+      background:linear-gradient(135deg,#0D1117 0%,#161B22 15%,#1C2128 30%,#21262D 45%,#2D1B69 60%,#3B1E78 75%,#4C1F87 90%,#5D2096 100%);
+      min-height:100vh;padding:20px;color:var(--text-primary);line-height:1.6;letter-spacing:-.01em;overflow-x:hidden
+    }
+    @keyframes float{0%,100%{transform:translateY(0) rotate(0)}33%{transform:translateY(-10px) rotate(1deg)}66%{transform:translateY(5px) rotate(-1deg)}}
+    @keyframes glow{0%,100%{box-shadow:0 0 20px rgba(0,122,255,.3)}50%{box-shadow:0 0 40px rgba(0,122,255,.6)}}
+    @keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    .container{max-width:900px;margin:0 auto;animation:slideIn .6s ease-out}
+    .glass{
+      background:var(--glass-bg);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);
+      border:1px solid var(--glass-border);border-radius:24px;padding:32px;margin-bottom:24px;
+      box-shadow:0 8px 32px var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,.1);
+      transition:all .3s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden
+    }
+    .glass::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent)}
+    .glass:hover{transform:translateY(-2px)}
+    .header{text-align:center;margin-bottom:40px;animation:float 6s ease-in-out infinite}
+    .header h1{
+      font-size:clamp(2rem,5vw,3.5rem);font-weight:800;margin-bottom:16px;
+      background:linear-gradient(135deg,#FFF,#007AFF,#AF52DE);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;letter-spacing:-.02em
+    }
+    .subtitle{font-size:1.1rem;font-weight:400;color:var(--text-secondary);margin-bottom:10px}
+    .time{font-size:.95rem;font-weight:600;color:var(--text-tertiary);font-variant-numeric:tabular-nums}
+    .row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+    .day-selector{display:flex;gap:16px;justify-content:center;margin-bottom:40px;flex-wrap:wrap}
+    .day-btn{
+      padding:14px 24px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);
+      color:var(--text-primary);border-radius:18px;cursor:pointer;font-weight:800;font-size:1rem;
+      transition:all .2s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden;backdrop-filter:blur(20px)
+    }
+    .day-btn.active{background:var(--primary-blue);border-color:var(--primary-blue);animation:glow 2s ease-in-out infinite;color:#fff}
+    .progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+    .progress-text{font-size:1.15rem;font-weight:800}
+    .progress-percent{font-size:1.8rem;font-weight:900;color:var(--primary-green);font-variant-numeric:tabular-nums}
+    .progress-track{height:14px;background:rgba(255,255,255,.1);border-radius:8px;overflow:hidden;position:relative}
+    .progress-fill{height:100%;background:linear-gradient(135deg,var(--primary-green),var(--primary-blue));border-radius:8px;transition:width .5s ease;width:0%;position:relative;overflow:hidden}
+    .section{margin-bottom:28px}
+    .section-title{font-size:1.25rem;font-weight:900;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+    .section-icon{font-size:1.4rem}
+    .task{
+      display:flex;align-items:center;padding:18px;background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.08);border-radius:16px;margin-bottom:10px;cursor:pointer;
+      transition:all .2s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden
+    }
+    .task:hover{background:rgba(255,255,255,.06)}
+    .task.completed{background:rgba(52,199,89,.1);border-color:rgba(52,199,89,.35)}
+    .task.completed .task-text{text-decoration:line-through;color:var(--text-tertiary)}
+    .checkbox{
+      width:26px;height:26px;border:2px solid rgba(255,255,255,.3);border-radius:50%;margin-left:14px;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s
+    }
+    .task.completed .checkbox{background:var(--primary-green);border-color:var(--primary-green);color:#fff;font-weight:800;transform:scale(1.05)}
+    .task-content{flex:1}
+    .task-text{font-weight:800;font-size:1.05rem;margin-bottom:4px;line-height:1.35}
+    .task-time{color:var(--text-secondary);font-size:.85rem}
+    .add-section{margin-top:28px}
+    .add-task{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap}
+    .add-input{
+      flex:1;min-width:260px;padding:16px 18px;background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.15);border-radius:14px;color:var(--text-primary);
+      transition:all .2s;backdrop-filter:blur(20px);text-align:right
+    }
+    .add-input::placeholder{color:var(--text-tertiary)}
+    .btn{padding:16px 20px;border:none;border-radius:14px;cursor:pointer;font-weight:900;font-size:1rem;transition:transform .15s, box-shadow .15s;min-width:110px}
+    .btn-primary{background:linear-gradient(135deg,var(--primary-green),#30D158);color:#fff}
+    .btn-danger{background:rgba(255,59,48,.18);color:#FF3B30;border:1px solid rgba(255,59,48,.35)}
+    .footer{text-align:center;color:var(--text-tertiary);margin-top:40px;font-size:.85rem}
+    @media (max-width:768px){
+      body{padding:16px}
+      .glass{padding:22px;border-radius:18px}
+      .day-selector{flex-direction:column;align-items:center}
+      .day-btn{width:100%;max-width:320px}
+      .add-task{flex-direction:column}
+      .add-input{min-width:auto}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="glass header">
+      <h1>🩺 טיפול באבא</h1>
+      <div class="subtitle">מערכת ניהול טיפול מתקדמת</div>
+      <div class="time" id="current-time" aria-live="polite"></div>
+    </header>
+
+    <section class="glass">
+      <div class="day-selector" role="tablist" aria-orientation="horizontal">
+        <button type="button" class="day-btn" id="sunday-btn" onclick="selectDay('sunday')" role="tab" aria-selected="false">🌙 יום ראשון בערב</button>
+        <button type="button" class="day-btn" id="weekdays-btn" onclick="selectDay('weekdays')" role="tab" aria-selected="false">📅 ימים שני־רביעי</button>
+      </div>
+      <div class="row" style="justify-content:center;margin-top:10px;gap:10px">
+        <button type="button" class="btn btn-danger" onclick="resetProgressForCurrentDay()">אפס התקדמות ליום הנוכחי</button>
+      </div>
+    </section>
+
+    <section class="glass" aria-label="התקדמות">
+      <div class="progress-header">
+        <span class="progress-text">🎯 התקדמות היום</span>
+        <span class="progress-percent" id="progress-percent">0%</span>
+      </div>
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </section>
+
+    <main id="tasks-container" aria-live="polite" aria-label="רשימת משימות"></main>
+
+    <section class="glass add-section" aria-label="הוספת משימה">
+      <div class="section-title"><span class="section-icon">➕</span> הוספת משימה חדשה</div>
+      <div class="add-task">
+        <input type="text" class="add-input" placeholder="הכנס משימה חדשה..." id="new-task-input" inputmode="text" />
+        <button type="button" class="btn btn-primary" onclick="addCustomTask()">הוסף</button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>נוצר במיוחד לטיפול באבא ❤️ • עיצוב Apple 2325</p>
+      <div id="env-warning" style="margin-top:8px;color:#FF9500;font-weight:700;display:none">פתח ב-Safari (לא בתצוגת Files) כדי שהאפליקציה תפעל.</div>
+    </footer>
+  </div>
+
+  <script>
+    // --- CONFIG ---
+    const TZ = 'Asia/Jerusalem';
+    let currentDay = 'sunday';
+    let tasks = {};
+    let customTasks = [];
+
+    // --- DATA ---
+    const protocol = {
+      sunday: {
+        'ערב': [
+          { id: 'eve1', text: '1 ערמוניה פלוס', time: '20:00' },
+          { id: 'eve2', text: '1 ליטורבה 80', time: '20:00' }
+        ]
+      },
+      weekdays: {
+        'בוקר — לפני ארוחת בוקר': [
+          { id: 'face', text: 'לשטוף פנים בסבון תינוקות', time: 'לפני ארוחת בוקר' },
+          { id: 'cream', text: 'למרוח משחת פוסידון על הפצע', time: 'לפני ארוחת בוקר' },
+          { id: 'fozid', text: '1 פוזיד', time: 'לפני ארוחת בוקר' },
+          { id: 'b12', text: '1 B12 למציצה', time: 'לפני ארוחת בוקר' }
+        ],
+        'אחרי ארוחת בוקר': [
+          { id: 'micro', text: '1 מיקרופירין', time: 'אחרי ארוחת בוקר' },
+          { id: 'cardio', text: '1 קרדילוק', time: 'אחרי ארוחת בוקר' },
+          { id: 'loser', text: '1 לוסרדקס', time: 'אחרי ארוחת בוקר' }
+        ],
+        '18:00 — אחרי ארוחת ערב': [
+          { id: 'omega', text: '1 אומגה 3', time: '18:00' },
+          { id: 'vitd', text: '1 ויטמין D', time: '18:00' }
+        ],
+        '20:00 — ערב': [
+          { id: 'eve1', text: '1 ערמוניה פלוס', time: '20:00' },
+          { id: 'eve2', text: '1 ליטורבה 80', time: '20:00' },
+          { id: 'drops', text: 'טיפות עיניים DUOTRAV — טיפה בכל עין', time: '20:00' }
+        ],
+        'במשך היום': [
+          { id: 'hilo', text: 'טיפות עיניים Hilo-Gel', time: 'במשך היום' }
+        ],
+        'לפי הצורך': [
+          { id: 'sleep', text: '¼ כדור מירו (כתום) לשינה', time: 'לפי הצורך' }
+        ]
+      }
+    };
+
+    // --- UTIL ---
+    const escapeHTML = (s='') =>
+      s.replace(/[&<>"'`=\/]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','/':'&#x2F;','`':'&#x60;','=':'&#x3D;'}[c]));
+
+    function updateTime(){
+      try{
+        const now = new Date();
+        const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false, timeZone: TZ };
+        document.getElementById('current-time').textContent = new Intl.DateTimeFormat('he-IL', opts).format(now);
+      }catch(e){
+        document.getElementById('current-time').textContent = new Date().toLocaleString('he-IL');
+      }
+    }
+
+    function saveState(){
+      localStorage.setItem('careAppTasks', JSON.stringify(tasks));
+      localStorage.setItem('careAppCustomTasks', JSON.stringify(customTasks));
+      localStorage.setItem('careAppCurrentDay', currentDay);
+    }
+
+    function loadState(){
+      try{
+        tasks = JSON.parse(localStorage.getItem('careAppTasks')) || {};
+        customTasks = JSON.parse(localStorage.getItem('careAppCustomTasks')) || [];
+        currentDay = localStorage.getItem('careAppCurrentDay') || 'sunday';
+      }catch(e){
+        tasks = {}; customTasks = []; currentDay = 'sunday';
+      }
+    }
+
+    function setActiveDayButton(){
+      ['sunday','weekdays'].forEach(id=>{
+        const btn = document.getElementById(id+'-btn');
+        if(!btn) return;
+        if(id===currentDay){ btn.classList.add('active'); btn.setAttribute('aria-selected','true'); }
+        else { btn.classList.remove('active'); btn.setAttribute('aria-selected','false'); }
+      });
+    }
+
+    function selectDay(day){
+      currentDay = day;
+      setActiveDayButton();
+      renderTasks();
+      updateProgress();
+      saveState();
+    }
+
+    function toggleTask(taskId, category){
+      const key = `${currentDay}_${category}`;
+      if(!tasks[key]) tasks[key] = {};
+      tasks[key][taskId] = !tasks[key][taskId];
+      saveState();
+      renderTasks();
+      updateProgress();
+    }
+
+    function addCustomTask(){
+      const input = document.getElementById('new-task-input');
+      const text = input.value.trim();
+      if(!text) return;
+      const newTask = {
+        id: 'custom_' + Date.now(),
+        text: text,
+        time: new Intl.DateTimeFormat('he-IL', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: TZ }).format(new Date())
+      };
+      customTasks.push(newTask);
+      input.value = '';
+      saveState();
+      renderTasks();
+      updateProgress();
+    }
+
+    function removeCustomTask(taskId){
+      customTasks = customTasks.filter(t => t.id !== taskId);
+      saveState();
+      renderTasks();
+      updateProgress();
+    }
+
+    function getSectionIcon(title){
+      if(title.includes('בוקר')) return '🌅';
+      if(title.includes('ערב') && !title.includes('20:00')) return '🌆';
+      if(title.includes('20:00')) return '🌙';
+      if(title.includes('במשך')) return '🕐';
+      if(title.includes('לפי')) return '💤';
+      return '💊';
+    }
+
+    function renderTasks(){
+      const container = document.getElementById('tasks-container');
+      container.innerHTML = '';
+      const currentProtocol = protocol[currentDay];
+
+      Object.entries(currentProtocol).forEach(([sectionTitle, sectionTasks])=>{
+        const section = document.createElement('section');
+        section.className = 'glass section';
+        section.setAttribute('aria-label', sectionTitle);
+
+        const header = `
+          <div class="section-title">
+            <span class="section-icon">${getSectionIcon(sectionTitle)}</span>
+            ${escapeHTML(sectionTitle)}
+          </div>
+        `;
+
+        const items = sectionTasks.map(task=>{
+          const key = `${currentDay}_${sectionTitle}`;
+          const done = tasks[key] && tasks[key][task.id];
+          return `
+            <div class="task ${done ? 'completed' : ''}" role="button" tabindex="0"
+                 aria-pressed="${done ? 'true' : 'false'}"
+                 onclick="toggleTask('${task.id}','${escapeHTML(sectionTitle)}')"
+                 onkeydown="if(event.key==='Enter'||event.key===' '){toggleTask('${task.id}','${escapeHTML(sectionTitle)}');}">
+              <div class="checkbox">${done ? '✓' : ''}</div>
+              <div class="task-content">
+                <div class="task-text">${escapeHTML(task.text)}</div>
+                <div class="task-time">🕐 ${escapeHTML(task.time)}</div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        section.innerHTML = header + items;
+        container.appendChild(section);
+      });
+
+      if(customTasks.length){
+        const customSection = document.createElement('section');
+        customSection.className = 'glass section';
+        customSection.setAttribute('aria-label','משימות נוספות');
+        customSection.innerHTML = `
+          <div class="section-title">
+            <span class="section-icon">➕</span> משימות נוספות
+          </div>
+          ${customTasks.map(task=>{
+            const key = `${currentDay}_custom`;
+            const done = tasks[key] && tasks[key][task.id];
+            return `
+              <div class="task ${done ? 'completed' : ''}" role="button" tabindex="0"
+                   aria-pressed="${done ? 'true' : 'false'}"
+                   onclick="toggleTask('${task.id}','custom')"
+                   onkeydown="if(event.key==='Enter'||event.key===' '){toggleTask('${task.id}','custom');}">
+                <div class="checkbox">${done ? '✓' : ''}</div>
+                <div class="task-content">
+                  <div class="task-text">${escapeHTML(task.text)}</div>
+                  <div class="task-time">🕐 ${escapeHTML(task.time)}</div>
+                </div>
+                <button type="button" class="btn btn-danger" style="margin-right:8px"
+                        onclick="event.stopPropagation(); removeCustomTask('${task.id}')">מחק</button>
+              </div>
+            `;
+          }).join('')}
+        `;
+        container.appendChild(customSection);
+      }
+
+      setActiveDayButton();
+    }
+
+    function updateProgress(){
+      let total=0, done=0;
+      const currentProtocol = protocol[currentDay];
+
+      Object.entries(currentProtocol).forEach(([sectionTitle, sectionTasks])=>{
+        total += sectionTasks.length;
+        const key = `${currentDay}_${sectionTitle}`;
+        if(tasks[key]) done += Object.values(tasks[key]).filter(Boolean).length;
+      });
+
+      total += customTasks.length;
+      const customKey = `${currentDay}_custom`;
+      if(tasks[customKey]) done += Object.values(tasks[customKey]).filter(Boolean).length;
+
+      const pct = total>0 ? Math.round((done/total)*100) : 0;
+      document.getElementById('progress-percent').textContent = pct + '%';
+      document.getElementById('progress-fill').style.width = pct + '%';
+    }
+
+    function resetProgressForCurrentDay(){
+      Object.keys(tasks).forEach(k => { if(k.startsWith(currentDay + '_')) delete tasks[k]; });
+      saveState();
+      renderTasks();
+      updateProgress();
+    }
+
+    // Warn if not in Safari (e.g., QuickLook of Files)
+    (function warnIfNotSafari(){
+      const ua = navigator.userAgent || '';
+      const isSafari = /Safari/.test(ua) && !/Chrome|CriOS|FxiOS/.test(ua);
+      if(!isSafari){ document.getElementById('env-warning').style.display = 'block'; }
+    })();
+
+    // INIT
+    loadState();
+    setInterval(updateTime, 1000);
+    updateTime();
+    renderTasks();
+    updateProgress();
+
+    document.getElementById('new-task-input').addEventListener('keypress',(e)=>{ if(e.key==='Enter') addCustomTask(); });
+    setActiveDayButton();
+  </script>
+</body>
+</html>
